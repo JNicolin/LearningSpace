@@ -3,21 +3,17 @@ Designdokument + Balsamiq
 UC-dokumentation
 Referenser
 - https://github.com/Swarnil/Tic-Tac-Toe-with-Html-CSS-Bootstrap-and-JavaScript/
+- https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_modal
 
 -----------------------------
-Ev byt ut col/rad mot en tabell istället. 
-Alt. behåll och gör möjligt att välja dimension n x n
+Dynamik
 
-En footer med info om ställningen, player 1 och 2, som uppdateras vi JS
-
-Ev göra motspelaren automatisk, alt valbart automatisk
-
-Ändra bakgrunden på fält när det klickas
-
-Gör en vinnar-modal.
-Gör en modal om man klickar på ett upptaget fält. 
-
-Något API-call? 
+- Welcome pop-up - med timer och X
+- Fält som flippar när de klickas
+- En start-button som försvinner och ersätts med en restart button + en p1, en p2 scorboard
+- Möjlighet att välja dimension?
+- API-call spela mot en CPU?
+- En vinnar-modal. Med timer och X
 
 
 

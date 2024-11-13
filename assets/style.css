@@ -1,6 +1,7 @@
+/* Global fonts */
 @import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Matemasie&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* css variables */
+/* CSS variables */
 :root {
     --winningBoxColor: rgb(17, 39, 105);
     --darkBoardColor: darkgreen;
