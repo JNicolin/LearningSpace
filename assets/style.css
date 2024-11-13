@@ -1,100 +1,82 @@
-@font-face {
-    font-family: "Short Plan";
-    src: url(./Fonts/Short\ Plan.otf);
-    src: url(./Fonts/Short\ Plan.ttf);
-}
-
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Matemasie&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* css variables */
 :root {
-    --winningBoxColor: rgb(56, 65, 92);
+    --winningBoxColor: rgb(17, 39, 105);
+    --darkBoardColor: darkgreen;
+    --lightBoardColor: lightblue;
+    --discreteBoardColor: lightgrey; 
+    --lightTextColor: yellow;
+    --darkTextColor: darkblue;
+    --primaryFontFamily: "Matemasie";
+    --secondaryFontFamily: "Agdasima"; 
 }
 
-
+/* General styling */ 
 body{
-    background: rgb(73, 81, 105);
+    background: var(--darkBoardColor);
 }
 
 h1 {
-    font-size: 80px;
-    font-family: "Short Plan", Arial, sans-serif;
-    color: yellow;
+    font-size: 4em;
+    font-family: var(--primaryFontFamily), Arial, sans-serif;
+    color: var(--lightTextColor);
 }
 
-.myContainer {
-    display: flex;
+h2 {
+    font-size: 2em;
+    font-family: var(--secondaryFontFamily), Arial, sans-serif;
+    color: var(--lightTextColor);
+}
+
+/* Navbar styling */
+.navbar{
+    background: var(--darkBoardColor);
+    border-bottom: 1px var(--discreteBoardColor) solid;
+    font-family: var(--secondaryFontFamily), Arial, sans-serif;
+    font-size: 1.5em; 
+    color: var(--lightTextColor);
+}
+
+/* Gameboard styling */
+.box {
+    display: flex; 
     align-items: center;
     justify-content: center;
-    padding: 20px 40px 40px 40px;
-    flex-direction: column;
+    height: 7rem;
+    border: 2.5px solid var(--lightBoardColor);
+    font-family: var(--primaryFontFamily), Arial, sans-serif;
+    font-size: 6rem;
+    color: var(--lightTextColor);
 }
 
-.box{
-    height: 150px;
-    display: flex;S
-    align-items: center;
-    justify-content: center;
-    font-family: "Short Plan", Arial, sans-serif;
-    font-size: 120px;
-    color: yellow;
-    border-right: 2px solid orange;
-    border-bottom: 2px solid orange;
+.pScore{
+    background-color: var(--lightBoardColor);
+    border: 2px solid var(--lightBoardColor);
+    border-radius: 4px;
+    font-family: var(--primaryFontFamily), Arial, sans-serif;
+    font-size: 1em;
+    color: var(--darkTextColor);
+    padding: 1em;
 }
 
-.box:nth-child(3n) {
-    border-right: none;
-}
-
-.box:nth-child(n+7) {
-    border-bottom: none;
-}
-
-.adjustBox{
-    width: 450px;
-    margin-top: 40px;
-}
-
-button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    background-color: orange;
-    border-color: orange;
-    color: rgb(73, 81, 105);
-    font-weight: bold;
-    font-size: 18px;
-    transition: 200ms transform;
-}
-
-button:hover {
+#restartBtn:hover {
     cursor: pointer;
     transform: translateY(-2px);
 }
 
+/* Footer styling */
+#contact {
+    border-top: 1px var(--discreteBoardColor) solid;
+    color: var(--lightTextColor);
+    font-size: 0.8em;
+}
 
-@media (max-width: 575.98px) {
+/* Media queries */
+@media (min-width: 578.98px) { 
+    .container {max-width: 578.98px }
+}
 
-    .myContainer {
-        min-height: 100vh
-    }
-
-    #playerText  {
-        font-size: 60px;
-    }
-
-    .adjustBox {
-        width: 300px;
-        margin-bottom: 40px;
-    }
-
-    .box{
-        height: 100px;
-        width: 100px;
-        font-size: 80px;
-    }
-
+@media (max-width: 578.98px) { 
+    h1 {font-size: 5em;}
 }
