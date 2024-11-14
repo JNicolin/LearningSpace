@@ -5,19 +5,23 @@ let boxes = document.getElementsByClassName("box")
 let p1Score = document.getElementById("pScore1")
 let p2Score = document.getElementById("pScore2")
 
-// var elem = document.createElement("img");
-// elem.setAttribute("src", "images/hydrangeas.jpg");
-// elem.setAttribute("height", "768");
-// elem.setAttribute("width", "1024");
-// elem.setAttribute("alt", "Flower");
-
 class Player {
-    constructor(label, symbol, value, wins, icon) {
+    constructor(label, symbol, value, wins, fruit) {
     this.label = label;
     this.symbol = symbol;
     this.value = value;
     this.wins = wins;
-    this.icon = icon;
+    this.fruit = fruit;
+    }
+}
+
+class Icon {
+    constructor(label, src1, alt1, src2, alt2) {
+        this.label = label; 
+        this.src1 = src1;
+        this.alt1 = alt1;
+        this.src2 = src2;
+        this.alt2 = src2;
     }
 }
 
@@ -26,8 +30,12 @@ class Player {
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
 
     // Initialize varibles with known values
-    const player1 = new Player("P1", "X", 1, 0, "/assets/img/1_citrus_happy.png");
-    const player2 = new Player("P2", "O", -1, 0, "/assets/img/2_orange_happy.png");
+    const ic_citrus = new Icon("Citrus", "assets/img/1_citrus_happy.png", "Happy citrus", "assets/img/1_citrus_sad.png", "Sad citrus")
+    const ic_orange = new Icon("Citrus", "assets/img/2_orange_happy.png", "Happy orange", "assets/img/2_orange_sad.png", "Sad orange")
+    const ic_pear= new Icon("Citrus", "assets/img/3_pear_happy.png", "Happy pear", "assets/img/3_pear_sad.png", "Sad pear")
+    const ic_strawberry = new Icon("Citrus", "assets/img/4_strawberry_happy.png", "Happy strawberry", "assets/img/4_strawberry_sad.png", "Sad strawberry")
+    const player1 = new Player("P1", "X", 1, 0, ic_orange);
+    const player2 = new Player("P2", "O", -1, 0, ic_pear);
     let current_player = player1 //p1 will start playing
     let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
     let gameOver = false; //State of game, it is not over from start
@@ -48,7 +56,7 @@ function boxClicked(e) {
         //1. if the box has not already been clicked, then log it to the current player
         board_array[this.id] = current_player.value
         //this.innerText = current_player.symbol
-        placeIcon(this.id, current_player.icon)
+        placeIcon(this.id, current_player.fruit)
 
         //2. Check for win after each click
         const isWinner = checkForWinner()
@@ -127,12 +135,12 @@ function restart() {
     headerText.style.color = ''
 }
 
-function placeIcon(id, icon) {
+function placeIcon(id, fruit) {
     var elem = document.createElement("img");
-    elem.setAttribute("src", icon);
+    elem.setAttribute("src", fruit.src1);
     elem.setAttribute("height", "60px");
     elem.setAttribute("width", "60px");
-    elem.setAttribute("alt", "Happy citrus");
+    elem.setAttribute("alt", fruit.alt1);
     document.getElementById(id).appendChild(elem);
  }
 
