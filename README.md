@@ -8,16 +8,16 @@ Referenser
 -----------------------------
 Dynamik
 
-- Welcome pop-up - med timer och X
-- Fält som flippar när de klickas
-- En start-button som försvinner och ersätts med en restart button + en p1, en p2 scorboard
-- Möjlighet att välja dimension?
-- API-call spela mot en CPU?
-- En vinnar-modal. Med timer och X
+- Byta ut förlorarens icon efter varje round 
+- En gemensam modal där JS publicerar texten genom "InnerHTML"
+    - rules
+    - user settings (med input på antal rounds/game och vilken icon)
+    - round won!
+    - game won!
 
 
 
-
+JN Gaming: 
                 <!-- Social -->
                 <div class="social-networks col-12">
                     <a href="https://www.facebook.com" target="_blank" aria-label="Link to Facebook"><i class="fa-brands fa-facebook"></i></a>

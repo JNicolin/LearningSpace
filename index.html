@@ -11,25 +11,16 @@
 <body class="d-flex flex-column d-flex min-vh-100">
     <!-- The navbar -->
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Navbar</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Rules</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="container-fluid justify-content-start">
+            <a class="nav-link active me-3" data-bs-toggle="modal" data-bs-target="#exampleModal" aria-current="page" href="#">Rules</a>
+            <a class="nav-link active" data-bs-toggle="modal" data-bs-target="#exampleModal2" aria-current="page" href="#">Settings</a>
         </div>
     </nav>
 
     <!-- The gameboard  -->
     <div class="container myContainer text-center pt-2 mb-4">
         <div class="my-3">
-            <h1 id="headerText">Tic-Tac-Toe</h1>
+            <h1 id="headerText" class="display-1">Tic-Tac-Toe</h1>
         </div>
         <div id="gameBoard" class="row row-cols-3">
             <div class="box" id="0"></div>
@@ -42,11 +33,60 @@
             <div class="box" id="7"></div>
             <div class="box" id="8"></div>
         </div>
-        <div id="gameStatus" class="row mt-3 justify-content-evenly">
-            <div id="pScore1" class="pScore col-3">P1 score</div>
-            <div id="pScore2" class="pScore col-3">P2 score</div>
-            <div id="restartBtn" class="pScore col-3">Restart</div>
+        <div id="gameStatus" class="row mt-3 justify-content-evenly align-text">
+            <div id="pScore1" class="display-8 pScore col-3">P1 score</div>
+            <div id="pScore2" class="display-8 pScore col-3">P2 score</div>
+            <div id="restartBtn" class="display-8 pScore col-3">Restart</div>
         </div>
+    </div>
+
+<!-- The rules modal -->
+<div class="modal" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">How to play</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Players take turns placing their mark in an empty space.</p>
+            <h6>How to Win</h6> 
+                <ol>
+                    <li>Navigate to get three of your marks in a row (horizontally, vertically, or diagonally).</li>
+                    <li>The first player to do this wins.</li>
+                    <li>If all spaces are filled and no one wins, it’s a tie.</li>
+                </ol>
+            <h6>Tips for Winning</h6>
+                <ul>
+                    <li> First: Start in the center for more chances to win.</li> 
+                    <li> Block Opponent: If your opponent is about to win, block their row.</li> 
+                    <li> Look for Diagonals: Diagonals can be an easy way to win.</li> 
+                    <li> Corners Help: Corners open up more possibilities for victory.</li> 
+                </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- The settings modal -->
+  <div class="modal" id="exampleModal2" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">User settings</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>User selects an icon and how many rounds to play in a match</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- The footer  -->
@@ -54,7 +94,7 @@
         <div class="container-fluid">
             <div class="row text-end">
                 <div class="col-12">
-                    <p>Copyright (C) JN Consulting</p>
+                    <p>(C) Johan Nicolin</p>
                 </div>
             </div>
         </div>    

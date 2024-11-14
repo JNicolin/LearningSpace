@@ -19,14 +19,7 @@ body{
 }
 
 h1 {
-    font-size: 4em;
     font-family: var(--primaryFontFamily), Arial, sans-serif;
-    color: var(--lightTextColor);
-}
-
-h2 {
-    font-size: 2em;
-    font-family: var(--secondaryFontFamily), Arial, sans-serif;
     color: var(--lightTextColor);
 }
 
@@ -47,7 +40,6 @@ h2 {
     height: 7rem;
     border: 2.5px solid var(--lightBoardColor);
     font-family: var(--primaryFontFamily), Arial, sans-serif;
-    font-size: 6rem;
     color: var(--lightTextColor);
 }
 
@@ -56,9 +48,7 @@ h2 {
     border: 2px solid var(--lightBoardColor);
     border-radius: 4px;
     font-family: var(--primaryFontFamily), Arial, sans-serif;
-    font-size: 1em;
     color: var(--darkTextColor);
-    padding: 1em;
 }
 
 #restartBtn:hover {
@@ -76,8 +66,4 @@ h2 {
 /* Media queries */
 @media (min-width: 578.98px) { 
     .container {max-width: 578.98px }
-}
-
-@media (max-width: 578.98px) { 
-    h1 {font-size: 5em;}
 }
