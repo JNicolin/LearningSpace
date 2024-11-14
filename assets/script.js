@@ -23,7 +23,7 @@ class Player {
     let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
     let gameOver = false; //State of game, it is not over from start
 
-    // Add eventlisteners to each box, react if a box is clicked
+    // Add eventlisteners to each box, initiate the main sequence after any click
     const startGame = ()=> {
         for (box of boxes) 
             box.addEventListener("click", boxClicked);
@@ -86,19 +86,20 @@ const winningCombinations = [
     [2,4,6]
 ]
 
-// function to if the check if the current click was a winner
+// function to if the check if the current click gave a winner
 function checkForWinner() {
     for(const combination of winningCombinations){
+        //select one winning combination of boxes at a time
         let [a,b,c] = combination
-        if ((board_array[a] + board_array[b] + board_array[c])==3 || 
-            (board_array[a] + board_array[b] + board_array[c])==-3) {
+        //check if all boxes in the combination have been clicked by the same player
+        if (Math.abs((board_array[a] + board_array[b] + board_array[c]))==3) {
             return [a,b,c]
         }
     }   
     return false
 }
 
-// Function to re-iniitalise the game-board, texts and game-parameters
+// Function to re-iniitalise the game-board and game-parameters
 function restart() {
     board_array.fill(0)
 
