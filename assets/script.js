@@ -4,12 +4,20 @@ let restartBtn = document.getElementById("restartBtn")
 let boxes = document.getElementsByClassName("box")
 let p1Score = document.getElementById("pScore1")
 let p2Score = document.getElementById("pScore2")
+
+// var elem = document.createElement("img");
+// elem.setAttribute("src", "images/hydrangeas.jpg");
+// elem.setAttribute("height", "768");
+// elem.setAttribute("width", "1024");
+// elem.setAttribute("alt", "Flower");
+
 class Player {
-    constructor(label, symbol, value, wins) {
+    constructor(label, symbol, value, wins, icon) {
     this.label = label;
     this.symbol = symbol;
     this.value = value;
     this.wins = wins;
+    this.icon = icon;
     }
 }
 
@@ -18,8 +26,8 @@ class Player {
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
 
     // Initialize varibles with known values
-    const player1 = new Player("P1", "X", 1, 0);
-    const player2 = new Player("P2", "O", -1, 0);
+    const player1 = new Player("P1", "X", 1, 0, "/assets/img/1_citrus_happy.png");
+    const player2 = new Player("P2", "O", -1, 0, "/assets/img/2_orange_happy.png");
     let current_player = player1 //p1 will start playing
     let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
     let gameOver = false; //State of game, it is not over from start
@@ -39,7 +47,8 @@ function boxClicked(e) {
     if (board_array[this.id] === 0) {      
         //1. if the box has not already been clicked, then log it to the current player
         board_array[this.id] = current_player.value
-        this.innerText = current_player.symbol
+        //this.innerText = current_player.symbol
+        placeIcon(this.id, current_player.icon)
 
         //2. Check for win after each click
         const isWinner = checkForWinner()
@@ -117,6 +126,16 @@ function restart() {
     headerText.innerHTML = `Let's Go ${current_player.label}! `
     headerText.style.color = ''
 }
+
+function placeIcon(id, icon) {
+    var elem = document.createElement("img");
+    elem.setAttribute("src", icon);
+    elem.setAttribute("height", "60px");
+    elem.setAttribute("width", "60px");
+    elem.setAttribute("alt", "Happy citrus");
+    document.getElementById(id).appendChild(elem);
+ }
+
 
 // Restart the game if the button is clicked 
 restartBtn.addEventListener('click', restart)
