@@ -5,7 +5,8 @@ let boxes = document.getElementsByClassName("box")
 let p1Score = document.getElementById("pScore1")
 let p2Score = document.getElementById("pScore2")
 class Player {
-    constructor(symbol, value, wins) {
+    constructor(label, symbol, value, wins) {
+    this.label = label;
     this.symbol = symbol;
     this.value = value;
     this.wins = wins;
@@ -17,8 +18,8 @@ class Player {
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
 
     // Initialize varibles with known values
-    const player1 = new Player("X", 1, 0);
-    const player2 = new Player("O", -1, 0);
+    const player1 = new Player("P1", "X", 1, 0);
+    const player2 = new Player("P2", "O", -1, 0);
     let current_player = player1 //p1 will start playing
     let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
     let gameOver = false; //State of game, it is not over from start
@@ -43,33 +44,37 @@ function boxClicked(e) {
         //2. Check for win after each click
         const isWinner = checkForWinner()
 
-        // If there is a win,
+        // Update the webpage if there is a win,
         if (isWinner !== false) {
-            // display a message with who has won and stop the game
-            headerText.innerHTML = `${current_player.symbol} has won!`
+            // Display a message of who has won and show the accumulated points
+            headerText.innerHTML = `${current_player.label} has won!`
             current_player.wins++
             p1Score.innerText = `P1 wins: ${player1.wins}`
             p2Score.innerText = `P2 wins: ${player2.wins}`
             
-            // and change the color of the boxes in the winning streak
+            // Change colors of the winning combination of boxes
             let winningBoxCross = isWinner   
             winningBoxCross.map(box => boxes[box].style.backgroundColor = winIndicator)
 
-            // and set gameOVer variable
+            // Close this turn of the game
             gameOver = true;
+            current_player = current_player == player1 ? player2 : player1
             return
         }
 
-        // 3. Check for a tie 
+        // 3. Check for tie 
         if (!board_array.includes(0)) {
-            // display a message and stop the game
+            // Display a message to show there is a tie
             headerText.innerHTML = "It's a tie!";
+            
+            // Close this turn of the game
             gameOver = true;
+            current_player = current_player == player1 ? player2 : player1
             return;
         }
 
         // 4. If there is no win and no tie,
-        //then let the next player click a box
+        //then continue the current game let the next player click a box
         current_player = current_player == player1 ? player2 : player1
     }
 }
@@ -109,9 +114,8 @@ function restart() {
     }
 
     gameOver = false
-    headerText.innerHTML = "Let's Go!"
+    headerText.innerHTML = `Let's Go ${current_player.label}! `
     headerText.style.color = ''
-    current_player = player1
 }
 
 // Restart the game if the button is clicked 
