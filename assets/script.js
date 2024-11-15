@@ -1,10 +1,10 @@
 // References to the DOM
 let headerText = document.getElementById("headerText")
 let restartBtn = document.getElementById("restartBtn")
+let settingsBtn = document.getElementById("settingsBtn")
 let boxes = document.getElementsByClassName("box")
 let p1Score = document.getElementById("pScore1")
 let p2Score = document.getElementById("pScore2")
-let modal = document.getElementById("exampleModal")
 
 // References to the CSS styling
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
@@ -21,22 +21,25 @@ class Player {
 }
 
 class Icon {
-    constructor(label, src1, alt1, src2, alt2) {
+    constructor(label, src1, alt1, src2, alt2, src3, alt3) {
         this.label = label; 
         this.src1 = src1;
         this.alt1 = alt1;
         this.src2 = src2;
         this.alt2 = src2;
+        this.src3 = src3;
+        this.alt3 = src3;
     }
 }
 
 // Initialize varibles with known values
-const ic_citrus = new Icon("Citrus", "assets/img/1_citrus_happy.png", "Happy citrus", "assets/img/1_citrus_sad.png", "Sad citrus")
-const ic_orange = new Icon("Orange", "assets/img/2_orange_happy.png", "Happy orange", "assets/img/2_orange_sad.png", "Sad orange")
-const ic_pear= new Icon("Pear", "assets/img/3_pear_happy.png", "Happy pear", "assets/img/3_pear_sad.png", "Sad pear")
-const ic_strawberry = new Icon("Strawberry", "assets/img/4_strawberry_happy.png", "Happy strawberry", "assets/img/4_strawberry_sad.png", "Sad strawberry")
-const player1 = new Player("P1", 1, 0, ic_orange, false);
-const player2 = new Player("P2", -1, 0, ic_pear, false);
+const ic_orange = new Icon("Orange", "assets/img/1_OrN.png", "Neutral orange icon", "assets/img/1_OrH.png", "Happy orange icon", "assets/img/1_OrS.png", "Sad orange icon")
+const ic_strawberry = new Icon("Strawberry", "assets/img/2_StN.png", "Neutral strawberry icon", "assets/img/2_StH.png", "Happy strawberry icon", "assets/img/2_StS.png", "Sad strawberry icon")
+const ic_apple = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "assets/img/3_ApH.png", "Happy apple icon", "assets/img/3_ApS.png", "Sad apple icon")
+const ic_pear = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
+const ic_citrus = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
+const player1 = new Player("P1", 1, 0, ic_apple, false);
+const player2 = new Player("P2", -1, 0, ic_orange, false);
 let current_player = player1 //p1 will start playing
 let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
 let gameOver = false; //State of game, it is not over from start
@@ -45,6 +48,7 @@ let gameOver = false; //State of game, it is not over from start
 const startGame = ()=> {
     for (box of boxes) 
         box.addEventListener("click", boxClicked);
+
 }
 
 // Main sequence. Runs after each user click
@@ -54,7 +58,7 @@ if (gameOver) return
 
 // Evaluate the effect of a click. Look for a win, a tie or go on to the next round 
 if (board_array[this.id] === 0) {      
-    //1. if the box has not already been clicked, then log value and place icon
+    //1. if the box has not already been clicked, then log value and add a user-icon
     board_array[this.id] = current_player.value
     placeIcon(this.id, current_player.fruit.src1, current_player.fruit.alt1)
 
@@ -63,15 +67,17 @@ if (board_array[this.id] === 0) {
 
     // Update the webpage if there is a win,
     if (isWinner !== false) {
-        headerText.innerHTML = `${current_player.label} has won!`
         current_player.winner = true;
         current_player.wins++
+        headerText.innerHTML = `${current_player.label} has won!`
         p1Score.innerText = `P1 wins: ${player1.wins}`
         p2Score.innerText = `P2 wins: ${player2.wins}`
+        flipIcons(player1)
+        flipIcons(player2)
         
         // Change colors of the winning combination of boxes
-        let winningBoxCross = isWinner   
-        winningBoxCross.map(box => boxes[box].style.backgroundColor = winIndicator)
+        let winningBoxSequence = isWinner   
+        winningBoxSequence.map(box => boxes[box].style.backgroundColor = winIndicator)
 
         // Close this turn of the game
         gameOver = true;
@@ -121,6 +127,30 @@ function checkForWinner() {
     return false
 }
 
+function placeIcon(id, src, alt) {
+    var elem = document.createElement("img");
+    elem.setAttribute("src", src);
+    elem.setAttribute("height", "60px");
+    elem.setAttribute("width", "60px");
+    elem.setAttribute("alt", alt);
+    document.getElementById(id).appendChild(elem);
+ }
+
+function flipIcons(player){
+    for (i = 0; i<board_array.length; i++) {
+        let boxId = i
+        let boxValue = board_array[i]
+        let currentBox = document.getElementById(boxId)
+        if (boxValue === player.value && player.winner) {
+            currentBox.removeChild(currentBox.firstChild); //remove old Icon
+            placeIcon(boxId, player.fruit.src2, player.fruit.alt2) //place new Icon, happy
+        } else if (boxValue === player.value && !player.winner) {
+            currentBox.removeChild(currentBox.firstChild); //remove old Icon
+            placeIcon(boxId, player.fruit.src3, player.fruit.alt3) //place new Icon, sad
+        }
+    }
+}
+
 // Function to re-iniitalise the game-board and game-parameters
 function restart() {
     board_array.fill(0)
@@ -137,16 +167,6 @@ function restart() {
     headerText.style.color = ''
     
 }
-
-function placeIcon(id, src, alt) {
-    var elem = document.createElement("img");
-    elem.setAttribute("src", src);
-    elem.setAttribute("height", "60px");
-    elem.setAttribute("width", "60px");
-    elem.setAttribute("alt", alt);
-    document.getElementById(id).appendChild(elem);
- }
-
 
 // Restart the game if the button is clicked 
 restartBtn.addEventListener('click', restart)
