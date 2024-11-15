@@ -32,6 +32,11 @@ h1 {
     color: var(--lightTextColor);
 }
 
+/* Modal styling */
+.hide {
+    display: none;
+}
+
 /* Gameboard styling */
 .box {
     display: flex; 
@@ -54,6 +59,14 @@ h1 {
 #restartBtn:hover {
     cursor: pointer;
     transform: translateY(-2px);
+}
+
+#gameProgress {
+background-color: var(--lightBoardColor);
+    border: 2px solid var(--lightBoardColor);
+    border-radius: 4px;
+    font-family: var(--primaryFontFamily), Arial, sans-serif;
+    color: var(--darkTextColor);
 }
 
 /* Footer styling */

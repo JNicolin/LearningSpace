@@ -1,10 +1,20 @@
 // References to the DOM
 let headerText = document.getElementById("headerText")
 let restartBtn = document.getElementById("restartBtn")
+let rulesBtn = document.getElementById("rulesBtn")
 let settingsBtn = document.getElementById("settingsBtn")
 let boxes = document.getElementsByClassName("box")
 let p1Score = document.getElementById("pScore1")
 let p2Score = document.getElementById("pScore2")
+let gameProgress = document.getElementById("gameProgress")
+let p1IconSelector = document.getElementById("p1Icon").value 
+let p2IconSelector = document.getElementById("p2Icon").value 
+let roundsSelector = document.getElementById("noOfRounds").value
+
+//dummy, hardcoded values
+let roundsPerGame = 2
+let gameBoard = []
+let selectedIcons = [2,4]
 
 // References to the CSS styling
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
@@ -26,21 +36,22 @@ class Icon {
         this.src1 = src1;
         this.alt1 = alt1;
         this.src2 = src2;
-        this.alt2 = src2;
+        this.alt2 = alt2;
         this.src3 = src3;
-        this.alt3 = src3;
+        this.alt3 = alt3;
     }
 }
 
 // Initialize varibles with known values
-const ic_orange = new Icon("Orange", "assets/img/1_OrN.png", "Neutral orange icon", "assets/img/1_OrH.png", "Happy orange icon", "assets/img/1_OrS.png", "Sad orange icon")
-const ic_strawberry = new Icon("Strawberry", "assets/img/2_StN.png", "Neutral strawberry icon", "assets/img/2_StH.png", "Happy strawberry icon", "assets/img/2_StS.png", "Sad strawberry icon")
-const ic_apple = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "assets/img/3_ApH.png", "Happy apple icon", "assets/img/3_ApS.png", "Sad apple icon")
-const ic_pear = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
-const ic_citrus = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
-const player1 = new Player("P1", 1, 0, ic_apple, false);
-const player2 = new Player("P2", -1, 0, ic_orange, false);
-let current_player = player1 //p1 will start playing
+const icon1 = new Icon("Orange", "assets/img/1_OrN.png", "Neutral orange icon", "assets/img/1_OrH.png", "Happy orange icon", "assets/img/1_OrS.png", "Sad orange icon")
+const icon2 = new Icon("Strawberry", "assets/img/2_StN.png", "Neutral strawberry icon", "assets/img/2_StH.png", "Happy strawberry icon", "assets/img/2_StS.png", "Sad strawberry icon")
+const icon3 = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "assets/img/3_ApH.png", "Happy apple icon", "assets/img/3_ApS.png", "Sad apple icon")
+const icon4 = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
+const icon5 = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
+const setOfIcons =[icon1, icon2, icon3, icon4, icon5]
+const player1 = new Player("P1", 1, 0, setOfIcons[selectedIcons[0]], false);
+const player2 = new Player("P2", -1, 0, setOfIcons[selectedIcons[1]], false);
+let current_player = player1 //p1 will always start playing
 let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
 let gameOver = false; //State of game, it is not over from start
 
@@ -48,7 +59,6 @@ let gameOver = false; //State of game, it is not over from start
 const startGame = ()=> {
     for (box of boxes) 
         box.addEventListener("click", boxClicked);
-
 }
 
 // Main sequence. Runs after each user click
@@ -80,7 +90,7 @@ if (board_array[this.id] === 0) {
         winningBoxSequence.map(box => boxes[box].style.backgroundColor = winIndicator)
 
         // Close this turn of the game
-        gameOver = true;
+        updateGameBoard(current_player)
         current_player = current_player == player1 ? player2 : player1
         return
     }
@@ -91,8 +101,7 @@ if (board_array[this.id] === 0) {
         headerText.innerHTML = "It's a tie!";
         
         // Close this turn of the game
-        gameOver = true;
-        current_player = current_player == player1 ? player2 : player1
+        updateGameBoard(current_player)
         return;
     }
 
@@ -151,8 +160,14 @@ function flipIcons(player){
     }
 }
 
+function updateGameBoard(){
+    let roundsPlayed = gameBoard.push(1)
+    gameProgress.innerText = `${roundsPlayed} out of ${roundsPerGame} rounds played`
+    gameOver = true;
+}
+
 // Function to re-iniitalise the game-board and game-parameters
-function restart() {
+function nextRound() {
     board_array.fill(0)
 
     for (box of boxes ) {
@@ -163,13 +178,31 @@ function restart() {
     gameOver = false
     player1.winner = false
     player2.winner = false
+    p1Score.innerText = `P1 wins: ${player1.wins}`
+    p2Score.innerText = `P2 wins: ${player2.wins}`
     headerText.innerHTML = `Let's Go ${current_player.label}! `
     headerText.style.color = ''
-    
+}
+
+//PROBLEM toggles bode class "hide" and leaves it on!!!
+function rulesModal() {
+    let myModal = document.getElementById("myModal")
+    document.getElementById("rulesModal").classList.toggle("hide")
+    myModal.classList.toggle("hide")
+}
+
+function settingsModal() {
+    let myModal = document.getElementById("settingsModal").classList.toggle("hide")
+    myModal.classList.toggle("hide")
 }
 
 // Restart the game if the button is clicked 
-restartBtn.addEventListener('click', restart)
+restartBtn.addEventListener('click', nextRound)
+
+// Open modal if button is clicked 
+rulesBtn.addEventListener('click', rulesModal)
+settingsBtn.addEventListener('click', settingsModal)
 
 // Start the game initially
 startGame()
+

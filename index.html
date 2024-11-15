@@ -12,8 +12,8 @@
     <!-- The navbar -->
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid justify-content-start">
-            <a id="rulesBtn" class="nav-link me-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Rules</a>
-            <a id="SettingsBtn" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal2">Settings</a>
+            <a id="rulesBtn" class="nav-link me-3" data-bs-toggle="modal" data-bs-target="#myModal">Rules</a>
+            <a id="settingsBtn" class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal">Settings</a>
         </div>
     </nav>
 
@@ -36,51 +36,48 @@
         <div id="gameStatus" class="row mt-3 justify-content-evenly align-text">
             <div id="pScore1" class="display-8 pScore col-3">P1 score</div>
             <div id="pScore2" class="display-8 pScore col-3">P2 score</div>
+            <div id="gameProgress" class="display-8 pScore col-3">rounds etc</div>
             <div id="restartBtn" class="display-8 pScore col-3">Restart</div>
         </div>
     </div>
 
-<!-- The rules modal -->
-<div class="modal" id="exampleModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">How to play</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <p>Players take turns placing their mark in an empty space.</p>
-            <h6>How to Win</h6> 
-                <ol>
-                    <li>Navigate to get three of your marks in a row (horizontally, vertically, or diagonally).</li>
-                    <li>The first player to do this wins.</li>
-                    <li>If all spaces are filled and no one wins, it’s a tie.</li>
-                </ol>
-            <h6>Tips for Winning</h6>
-                <ul>
-                    <li> First: Start in the center for more chances to win.</li> 
-                    <li> Block Opponent: If your opponent is about to win, block their row.</li> 
-                    <li> Look for Diagonals: Diagonals can be an easy way to win.</li> 
-                    <li> Corners Help: Corners open up more possibilities for victory.</li> 
-                </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- The settings modal -->
-  <div class="modal" id="exampleModal2" tabindex="-1">
+  <!-- The modal -->
+  <div class="modal" id="myModal" tabindex="-1">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">User settings</h5>
+            <h5 class="modal-title">Tic Tac Toe</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-              <p>User selects an icon and how many rounds to play in a match</p>
+            <div id="rulesModal" class="hide">
+              <h6>How to Play</h6>   
+              <p>Players take turns placing their mark in an empty space.</p>
+              <h6>How to Win</h6> 
+                  <ol>
+                      <li>Navigate to get three of your marks in a row (horizontally, vertically, or diagonally).</li>
+                      <li>The first player to do this wins.</li>
+                      <li>If all spaces are filled and no one wins, it’s a tie.</li>
+                  </ol>
+              <h6>Tips for Winning</h6>
+                  <ul>
+                      <li> First: Start in the center for more chances to win.</li> 
+                      <li> Block Opponent: If your opponent is about to win, block their row.</li> 
+                      <li> Look for Diagonals: Diagonals can be an easy way to win.</li> 
+                      <li> Corners Help: Corners open up more possibilities for victory.</li> 
+                  </ul>
+            </div> 
+            <div id="settingsModal" class="">
+              <label for="p1Icon">First player Icon</label>
+              <input type="number" id="p1Icon" name="P1 icon"><br>
+              <label for="p2Icon">Second player Icon</label>
+              <input type="number" id="p2Icon" name="P2 icon"><br>
+              <label for="noOfRounds">Rounds per game</label>
+              <input type="Number" id="noOfRounds" name="Rounds per game"><br>
+            </div> 
+            <div id="initialModal" class="hide">
+              <p>welcome text</p>
+            </div> 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -108,3 +105,4 @@
     <script src="assets/script.js"></script>
 </body>
 </html>
+
