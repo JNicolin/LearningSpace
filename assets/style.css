@@ -54,6 +54,7 @@ h1 {
     border-radius: 4px;
     font-family: var(--primaryFontFamily), Arial, sans-serif;
     color: var(--darkTextColor);
+    min-height: 60px;
 }
 
 #restartBtn:hover {
