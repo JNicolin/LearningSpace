@@ -197,7 +197,6 @@ function closeGame() {
     board_array.fill(0)
     for (i=0; i<roundsPerGame; i++){
         roundsResult.shift()
-        console.log(roundsResult.length)
     }
 
     for (box of boxes ) {
