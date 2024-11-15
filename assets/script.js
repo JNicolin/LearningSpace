@@ -11,10 +11,9 @@ let p1IconSelector = document.getElementById("p1Icon").value
 let p2IconSelector = document.getElementById("p2Icon").value 
 let roundsSelector = document.getElementById("noOfRounds").value
 
-//dummy, hardcoded values
-let roundsPerGame = 2
-let gameBoard = []
-let selectedIcons = [2,4]
+//dummy, hardcoded values - To be fetched from the UI
+let roundsPerGame = 3
+let selectedIcons = [3,1]
 
 // References to the CSS styling
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
@@ -53,20 +52,20 @@ const player1 = new Player("P1", 1, 0, setOfIcons[selectedIcons[0]], false);
 const player2 = new Player("P2", -1, 0, setOfIcons[selectedIcons[1]], false);
 let current_player = player1 //p1 will always start playing
 let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
-let gameOver = false; //State of game, it is not over from start
-let roundOver = false;
+let roundsResult = []
+let gameCompleted = false; //State of game, it is not over from start
+let roundCompleted = false;
 
 // Start the game 
-
-    const nextRound = ()=> {
-        for (box of boxes) 
-            box.addEventListener("click", boxClicked);
-    }
+const nextRound = ()=> {
+    for (box of boxes) 
+        box.addEventListener("click", boxClicked);
+}
 
     // Main sequence. Runs after each user click
     function boxClicked(e) {
     // Stop if the round is already over
-    if (roundOver) return
+    if (roundCompleted) return
 
     // Evaluate the effect of a click. Look for a win, a tie or go on to the next round 
     if (board_array[this.id] === 0) {      
@@ -74,7 +73,7 @@ let roundOver = false;
         board_array[this.id] = current_player.value
         placeIcon(this.id, current_player.fruit.src1, current_player.fruit.alt1)
 
-        //2. Check for win after each click
+        //2. Check if there is a winning sequence after each click
         const isWinner = checkForWinner()
 
         // Update the webpage if there is a win,
@@ -93,9 +92,11 @@ let roundOver = false;
 
             // Close this turn of the game
             updateGameBoard(current_player)
-
-            roundOver = true;
-            current_player = current_player == player1 ? player2 : player1
+            roundCompleted = true;            
+            if (roundsResult.length === roundsPerGame) {
+                gameCompleted = true
+                closeGame()
+            }
             return
         }
 
@@ -106,8 +107,12 @@ let roundOver = false;
             
             // Close this turn of the game
             updateGameBoard(current_player)
-            roundOver = true;
-            return;
+            roundCompleted = true;
+            if (roundsResult.length === roundsPerGame) {
+                gameCompleted = true
+                closeGame()
+            }
+            return
         }
 
         // 4. If there is no win and no tie,
@@ -166,12 +171,12 @@ function flipIcons(player){
 }
 
 function updateGameBoard(){
-    let roundsPlayed = gameBoard.push(1)
+    let roundsPlayed = roundsResult.push(1)
     gameProgress.innerText = `${roundsPlayed} out of ${roundsPerGame} rounds`
 }
 
 // Function to re-iniitalise the game-board and game-parameters
-function initializeRound() {
+function initializeNewRound() {
     board_array.fill(0)
 
     for (box of boxes ) {
@@ -179,15 +184,39 @@ function initializeRound() {
         box.style.backgroundColor = ''
     }
 
-    roundOver = false
+    roundCompleted = false
     player1.winner = false
     player2.winner = false
-    // player1.wins = 0
-    // player2.wins = 0
     p1Score.innerHTML = `P1 wins<br> ${player1.wins}`
     p2Score.innerHTML = `P2 wins<br> ${player2.wins}`
     headerText.innerHTML = `Let's Go ${current_player.label}! `
     headerText.style.color = ''
+}
+
+function closeGame() {
+    board_array.fill(0)
+    for (i=0; i<roundsPerGame; i++){
+        roundsResult.shift()
+        console.log(roundsResult.length)
+    }
+
+    for (box of boxes ) {
+        box.innerText = ''
+        box.style.backgroundColor = ''
+    }
+
+    gameCompleted = false
+    roundCompleted = false
+    player1.winner = false
+    player2.winner = false
+    player1.wins = 0
+    player2.wins = 0
+    p1Score.innerHTML = `P1 wins<br> ${player1.wins}`
+    p2Score.innerHTML = `P2 wins<br> ${player2.wins}`
+    headerText.innerHTML = `Let's Go ${current_player.label}! `
+    gameProgress.innerText = `0 out of ${roundsPerGame} rounds`
+    headerText.style.color = ''
+    current_player = player1
 }
 
 //PROBLEM toggles bode class "hide" and leaves it on!!!
@@ -202,13 +231,22 @@ function settingsModal() {
     myModal.classList.toggle("hide")
 }
 
-// Start a new round if the button is clicked 
-restartBtn.addEventListener('click', initializeRound)
+function welcomeModal() {
+    let myModal = document.getElementById("myModal")
+    document.getElementById("welcomeModal").classList.toggle("hide")
+    myModal.classList.toggle("hide")
+}
 
-// Open modal if button is clicked 
-rulesBtn.addEventListener('click', rulesModal)
-settingsBtn.addEventListener('click', settingsModal)
+function winnerslModal() {
+    let myModal = document.getElementById("myModal")
+    document.getElementById("winnersModal").classList.toggle("hide")
+    myModal.classList.toggle("hide")
+}
+
+// Handle user's actions to the UI controls
+restartBtn.addEventListener('click', initializeNewRound) // restart button clicked 
+rulesBtn.addEventListener('click', rulesModal) // Navbar button clicked
+settingsBtn.addEventListener('click', settingsModal) // Navbar button clicked
 
 // Start the game initially
 nextRound()
-
