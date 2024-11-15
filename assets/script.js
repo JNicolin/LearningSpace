@@ -54,62 +54,67 @@ const player2 = new Player("P2", -1, 0, setOfIcons[selectedIcons[1]], false);
 let current_player = player1 //p1 will always start playing
 let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
 let gameOver = false; //State of game, it is not over from start
+let roundOver = false;
 
-// Add eventlisteners to each box, initiate the main sequence after any click
-const startGame = ()=> {
-    for (box of boxes) 
-        box.addEventListener("click", boxClicked);
-}
+// Start the game 
 
-// Main sequence. Runs after each user click
-function boxClicked(e) {
-// Stop if the game is already over
-if (gameOver) return
+    const nextRound = ()=> {
+        for (box of boxes) 
+            box.addEventListener("click", boxClicked);
+    }
 
-// Evaluate the effect of a click. Look for a win, a tie or go on to the next round 
-if (board_array[this.id] === 0) {      
-    //1. if the box has not already been clicked, then log value and add a user-icon
-    board_array[this.id] = current_player.value
-    placeIcon(this.id, current_player.fruit.src1, current_player.fruit.alt1)
+    // Main sequence. Runs after each user click
+    function boxClicked(e) {
+    // Stop if the round is already over
+    if (roundOver) return
 
-    //2. Check for win after each click
-    const isWinner = checkForWinner()
+    // Evaluate the effect of a click. Look for a win, a tie or go on to the next round 
+    if (board_array[this.id] === 0) {      
+        //1. if the box has not already been clicked, then log value and add a user-icon
+        board_array[this.id] = current_player.value
+        placeIcon(this.id, current_player.fruit.src1, current_player.fruit.alt1)
 
-    // Update the webpage if there is a win,
-    if (isWinner !== false) {
-        current_player.winner = true;
-        current_player.wins++
-        headerText.innerHTML = `${current_player.label} has won!`
-        p1Score.innerText = `P1 wins: ${player1.wins}`
-        p2Score.innerText = `P2 wins: ${player2.wins}`
-        flipIcons(player1)
-        flipIcons(player2)
-        
-        // Change colors of the winning combination of boxes
-        let winningBoxSequence = isWinner   
-        winningBoxSequence.map(box => boxes[box].style.backgroundColor = winIndicator)
+        //2. Check for win after each click
+        const isWinner = checkForWinner()
 
-        // Close this turn of the game
-        updateGameBoard(current_player)
+        // Update the webpage if there is a win,
+        if (isWinner !== false) {
+            current_player.winner = true;
+            current_player.wins++
+            headerText.innerHTML = `${current_player.label} has won!`
+            p1Score.innerHTML = `P1 wins<br> ${player1.wins}`
+            p2Score.innerHTML = `P2 wins<br> ${player2.wins}`
+            flipIcons(player1)
+            flipIcons(player2)
+            
+            // Change colors of the winning combination of boxes
+            let winningBoxSequence = isWinner   
+            winningBoxSequence.map(box => boxes[box].style.backgroundColor = winIndicator)
+
+            // Close this turn of the game
+            updateGameBoard(current_player)
+
+            roundOver = true;
+            current_player = current_player == player1 ? player2 : player1
+            return
+        }
+
+        // 3. Check for tie 
+        if (!board_array.includes(0)) {
+            // Display a message to show there is a tie
+            headerText.innerHTML = "It's a tie!";
+            
+            // Close this turn of the game
+            updateGameBoard(current_player)
+            roundOver = true;
+            return;
+        }
+
+        // 4. If there is no win and no tie,
+        //then continue the current game let the next player click a box
         current_player = current_player == player1 ? player2 : player1
-        return
+        }
     }
-
-    // 3. Check for tie 
-    if (!board_array.includes(0)) {
-        // Display a message to show there is a tie
-        headerText.innerHTML = "It's a tie!";
-        
-        // Close this turn of the game
-        updateGameBoard(current_player)
-        return;
-    }
-
-    // 4. If there is no win and no tie,
-    //then continue the current game let the next player click a box
-    current_player = current_player == player1 ? player2 : player1
-    }
-}
 
 // Helper functions and declarations
 const winningCombinations = [
@@ -162,12 +167,11 @@ function flipIcons(player){
 
 function updateGameBoard(){
     let roundsPlayed = gameBoard.push(1)
-    gameProgress.innerText = `${roundsPlayed} out of ${roundsPerGame} rounds played`
-    gameOver = true;
+    gameProgress.innerText = `${roundsPlayed} out of ${roundsPerGame} rounds`
 }
 
 // Function to re-iniitalise the game-board and game-parameters
-function nextRound() {
+function initializeRound() {
     board_array.fill(0)
 
     for (box of boxes ) {
@@ -175,11 +179,13 @@ function nextRound() {
         box.style.backgroundColor = ''
     }
 
-    gameOver = false
+    roundOver = false
     player1.winner = false
     player2.winner = false
-    p1Score.innerText = `P1 wins: ${player1.wins}`
-    p2Score.innerText = `P2 wins: ${player2.wins}`
+    // player1.wins = 0
+    // player2.wins = 0
+    p1Score.innerHTML = `P1 wins<br> ${player1.wins}`
+    p2Score.innerHTML = `P2 wins<br> ${player2.wins}`
     headerText.innerHTML = `Let's Go ${current_player.label}! `
     headerText.style.color = ''
 }
@@ -196,13 +202,13 @@ function settingsModal() {
     myModal.classList.toggle("hide")
 }
 
-// Restart the game if the button is clicked 
-restartBtn.addEventListener('click', nextRound)
+// Start a new round if the button is clicked 
+restartBtn.addEventListener('click', initializeRound)
 
 // Open modal if button is clicked 
 rulesBtn.addEventListener('click', rulesModal)
 settingsBtn.addEventListener('click', settingsModal)
 
 // Start the game initially
-startGame()
+nextRound()
 
