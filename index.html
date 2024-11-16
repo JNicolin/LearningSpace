@@ -12,8 +12,9 @@
     <!-- The navbar -->
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
         <div class="container-fluid justify-content-start">
-            <a id="rulesBtn" class="nav-link me-3" data-bs-toggle="modal" data-bs-target="#myModal">Rules</a>
-            <a id="settingsBtn" class="nav-link" data-bs-toggle="modal" data-bs-target="#myModal">Settings</a>
+            <!-- <a id="rulesBtn" class="nav-link me-3" data-bs-toggle="modal" data-bs-target="#myModal">Rules</a> -->
+            <a id="rulesBtn" class="nav-link me-3" >Rules</a>
+            <a id="settingsBtn" class="nav-link" >Settings</a>
         </div>
     </nav>
 
@@ -69,7 +70,7 @@
                       <li> Corners Help: Corners open up more possibilities for victory.</li> 
                   </ul>
             </div> 
-            <div id="settingsModal" class="">
+            <div id="settingsModal" class="hide">
               <label for="p1Icon">First player Icon</label>
               <input type="number" id="p1Icon" name="P1 icon"><br>
               <label for="p2Icon">Second player Icon</label>
@@ -81,7 +82,7 @@
               <p>welcome to the Game!</p>
               <p>Go to the Settings menue to select a favourite icon and the numbers of rounds you want to playt</p>
             </div> 
-            <div id="winnerslModal" class="hide">
+            <div id="winnersModal" class="hide">
               <p>The winner is</p>
               <p>Want to play again?</p>
             </div> 

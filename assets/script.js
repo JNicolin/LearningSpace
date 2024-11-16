@@ -10,10 +10,11 @@ let gameProgress = document.getElementById("gameProgress")
 let p1IconSelector = document.getElementById("p1Icon").value 
 let p2IconSelector = document.getElementById("p2Icon").value 
 let roundsSelector = document.getElementById("noOfRounds").value
+let modal = new bootstrap.Modal(document.getElementById("myModal"))
 
 //dummy, hardcoded values - To be fetched from the UI
 let roundsPerGame = 3
-let selectedIcons = [3,1]
+let selectedIcons = [1,2]
 
 // References to the CSS styling
     let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
@@ -48,11 +49,12 @@ const icon3 = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "a
 const icon4 = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
 const icon5 = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
 const setOfIcons =[icon1, icon2, icon3, icon4, icon5]
-const player1 = new Player("P1", 1, 0, setOfIcons[selectedIcons[0]], false);
-const player2 = new Player("P2", -1, 0, setOfIcons[selectedIcons[1]], false);
+const player1 = new Player("P1", 10, 0, setOfIcons[selectedIcons[0]], false);
+const player2 = new Player("P2", -10, 0, setOfIcons[selectedIcons[1]], false);
 let current_player = player1 //p1 will always start playing
 let board_array = Array(9).fill(0) //Array to keep track of what squares have been clicked
 let roundsResult = []
+let roundsPlayed= []
 let gameCompleted = false; //State of game, it is not over from start
 let roundCompleted = false;
 
@@ -61,6 +63,10 @@ const nextRound = ()=> {
     for (box of boxes) 
         box.addEventListener("click", boxClicked);
 }
+
+    window.onload = function() {
+        winnersModal()
+    }
 
     // Main sequence. Runs after each user click
     function boxClicked(e) {
@@ -139,7 +145,7 @@ function checkForWinner() {
         //select one winning combination of boxes at a time
         let [a,b,c] = combination
         //check if all boxes in the combination have been clicked by the same player
-        if (Math.abs((board_array[a] + board_array[b] + board_array[c]))==3) {
+        if (Math.abs((board_array[a] + board_array[b] + board_array[c]))==30) {
             return [a,b,c]
         }
     }   
@@ -171,13 +177,17 @@ function flipIcons(player){
 }
 
 function updateGameBoard(){
-    let roundsPlayed = roundsResult.push(1)
+    roundsPlayed = roundsResult.push(1)
     gameProgress.innerText = `${roundsPlayed} out of ${roundsPerGame} rounds`
 }
 
 // Function to re-iniitalise the game-board and game-parameters
 function initializeNewRound() {
     board_array.fill(0)
+
+    for (i=0; i<roundsPerGame; i++){
+        roundsResult.shift()
+    }
 
     for (box of boxes ) {
         box.innerText = ''
@@ -195,10 +205,12 @@ function initializeNewRound() {
 
 function closeGame() {
     board_array.fill(0)
+    console.log(board_array)
+
     for (i=0; i<roundsPerGame; i++){
         roundsResult.shift()
     }
-
+    
     for (box of boxes ) {
         box.innerText = ''
         box.style.backgroundColor = ''
@@ -218,28 +230,25 @@ function closeGame() {
     current_player = player1
 }
 
-//PROBLEM toggles bode class "hide" and leaves it on!!!
+//Problem - class does not toggle back. 
 function rulesModal() {
-    let myModal = document.getElementById("myModal")
     document.getElementById("rulesModal").classList.toggle("hide")
-    myModal.classList.toggle("hide")
+    modal.show()
 }
 
 function settingsModal() {
-    let myModal = document.getElementById("settingsModal").classList.toggle("hide")
-    myModal.classList.toggle("hide")
-}
+    document.getElementById("settingsModal").classList.toggle("hide")
+    modal.show()
+ }
 
 function welcomeModal() {
-    let myModal = document.getElementById("myModal")
     document.getElementById("welcomeModal").classList.toggle("hide")
-    myModal.classList.toggle("hide")
+    modal.show()
 }
 
-function winnerslModal() {
-    let myModal = document.getElementById("myModal")
+function winnersModal() {
     document.getElementById("winnersModal").classList.toggle("hide")
-    myModal.classList.toggle("hide")
+    modal.show()
 }
 
 // Handle user's actions to the UI controls
