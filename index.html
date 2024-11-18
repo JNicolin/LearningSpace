@@ -69,12 +69,24 @@
                   </ul>
             </div> 
             <div id="settingsModal" class="hide">
-              <label for="p1Icon">First player Icon</label>
-              <input type="number" id="p1Icon" name="P1 icon"><br>
-              <label for="p2Icon">Second player Icon</label>
-              <input type="number" id="p2Icon" name="P2 icon"><br>
-              <label for="noOfRounds">Rounds per game</label>
-              <input type="Number" id="noOfRounds" name="Rounds per game"><br>
+                <select id ="p1Icon" class="form-select form-select-sm" aria-label="Select player 1 icon">
+                    <option selected>Player 1 icon</option>
+                    <option value="0">Orange</option>
+                    <option value="1">Strawberry</option>
+                    <option value="2">Apple</option>
+                    <option value="3">Pear</option>
+                    <option value="4">Citrus</option>
+                </select>
+                <select id="p2Icon" class="form-select form-select-sm" aria-label="Select player 2 icon">
+                    <option selected>Player 2 icon</option>
+                    <option value="0">Orange</option>
+                    <option value="1">Strawberry</option>
+                    <option value="2">Apple</option>
+                    <option value="3">Pear</option>
+                    <option value="4">Citrus</option>
+                </select>
+                <label for="rounds" class="form-label mt-2">Number of rounds per game</label>
+                <input id="rounds" class="form-control form-control-sm" type="number" placeholder=".form-control-sm" aria-label=".form-control-sm example" onchange="updateSelectedRounds(this.value)">
             </div> 
             <div id="welcomeModal" class="hide">
               <p>welcome to the Game!</p>

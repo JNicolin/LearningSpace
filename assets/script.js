@@ -7,9 +7,9 @@ let restartBtn = document.getElementById("restartBtn")
 let navBtnRules = document.getElementById("rulesBtn")
 let navBtnSettings = document.getElementById("settingsBtn")
 let boxes = document.getElementsByClassName("box")
-let p1IconSelector = document.getElementById("p1Icon").value 
-let p2IconSelector = document.getElementById("p2Icon").value 
-let roundsSelector = document.getElementById("noOfRounds").value
+let p1IconSelector = document.getElementById("p1Icon") 
+let p2IconSelector = document.getElementById("p2Icon")
+let roundsSelector = document.getElementById("rounds")
 let modal = new bootstrap.Modal(document.getElementById("myModal"))
 
 // Custom class- and object-definitions
@@ -66,8 +66,8 @@ const icon3 = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "a
 const icon4 = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
 const icon5 = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
 const icons =[icon1, icon2, icon3, icon4, icon5]
-const p1 = new Player("P1", 10, 0, icons[gameSettings.p1Icon], false);
-const p2 = new Player("P2", -10, 0, icons[gameSettings.p2Icon], false);
+let p1 = new Player("P1", 10, 0, icons[gameSettings.p1Icon], false);
+let p2 = new Player("P2", -10, 0, icons[gameSettings.p2Icon], false);
 let state = 0; // 0 newGame, 1 nextRound, 2 roundWin, 3 roundTie, 4 gameWin, 5 gameTie 
 let clickedBoxes = Array(9).fill(0);
 gameStats.currentPlayer = p1;
@@ -285,6 +285,10 @@ function updateGameStats(state) {
     }
 } 
 
+function updateSelectedRounds(selectedValue) {
+    gameSettings.p1Icon = selectedValue
+}
+
 function restartGame() {
     state = gameStats.gameOver === true ? 0 : 1 // newGame : nextRound 
     updateGameStats(state)
@@ -314,7 +318,7 @@ function winnersModal() {
 }
 
 window.onload = function() {
-    winnersModal()
+    welcomeModal()
 }
 
 // Start the game initially

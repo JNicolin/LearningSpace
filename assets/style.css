@@ -51,8 +51,12 @@ h1 {
     border-radius: 5px;
 }   
 
-.btn-close {
-    color: color: var(--lightTextColor);
+#roundsSelector, #p1Icon, #p2Icon {
+    background: var(--discreteBoardColor);
+}
+
+#roundsSelector {
+    width: 30px; 
 }
 
 /* Gameboard styling */
