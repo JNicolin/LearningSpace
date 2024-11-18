@@ -4,10 +4,10 @@
 /* CSS variables */
 :root {
     --winningBoxColor: rgb(17, 39, 105);
-    --darkBoardColor: darkgreen;
+    --darkBoardColor: rgb(1, 81, 1);
     --lightBoardColor: lightblue;
     --discreteBoardColor: lightgrey; 
-    --lightTextColor: yellow;
+    --lightTextColor: rgb(252, 252, 3);
     --darkTextColor: darkblue;
     --primaryFontFamily: "Matemasie";
     --secondaryFontFamily: "Agdasima"; 
@@ -35,6 +35,24 @@ h1 {
 /* Modal styling */
 .hide {
     display: none;
+}
+
+.modal-backdrop {
+    background-color: var(--discreteBoardColor);
+ }
+
+.modal {
+    color: var(--lightTextColor);
+} 
+
+.modal-content {
+    background: var(--darkBoardColor);
+    border: 4px solid var(--lightTextColor);
+    border-radius: 5px;
+}   
+
+.btn-close {
+    color: color: var(--lightTextColor);
 }
 
 /* Gameboard styling */
