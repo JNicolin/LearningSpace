@@ -51,54 +51,10 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div id="rulesModal" class="hide">
-              <h6>How to Play</h6>   
-              <p>Players take turns placing their mark in an empty space.</p>
-              <h6>How to Win</h6> 
-                  <ol>
-                      <li>Navigate to get three of your marks in a row (horizontally, vertically, or diagonally).</li>
-                      <li>The first player to do this wins.</li>
-                      <li>If all spaces are filled and no one wins, it’s a tie.</li>
-                  </ol>
-              <h6>Tips for Winning</h6>
-                  <ul>
-                      <li> First: Start in the center for more chances to win.</li> 
-                      <li> Block Opponent: If your opponent is about to win, block their row.</li> 
-                      <li> Look for Diagonals: Diagonals can be an easy way to win.</li> 
-                      <li> Corners Help: Corners open up more possibilities for victory.</li> 
-                  </ul>
-            </div> 
-            <div id="settingsModal" class="hide">
-                <select id ="p1Icon" class="form-select form-select-sm" aria-label="Select player 1 icon">
-                    <option selected>Player 1 icon</option>
-                    <option value="0">Orange</option>
-                    <option value="1">Strawberry</option>
-                    <option value="2">Apple</option>
-                    <option value="3">Pear</option>
-                    <option value="4">Citrus</option>
-                </select>
-                <select id="p2Icon" class="form-select form-select-sm" aria-label="Select player 2 icon">
-                    <option selected>Player 2 icon</option>
-                    <option value="0">Orange</option>
-                    <option value="1">Strawberry</option>
-                    <option value="2">Apple</option>
-                    <option value="3">Pear</option>
-                    <option value="4">Citrus</option>
-                </select>
-                <label for="rounds" class="form-label mt-2">Number of rounds per game</label>
-                <input id="rounds" class="form-control form-control-sm" type="number" placeholder=".form-control-sm" aria-label=".form-control-sm example" onchange="updateSelectedRounds(this.value)">
-            </div> 
-            <div id="welcomeModal" class="hide text-center">
-              <h2>Welcome player!</h2>
-              <p>Enjoy a nice moment with a friend and just play away!<br>
-                From the settings menu you can adjust the lenght of a game and choose a favourite fruity icon.<br>
-                Good luck! 
-              </p>
-            </div>
-            <div id="winnersModal" class="hide">
-              <p>The winner is</p>
-              <p>Want to play again?</p>
-            </div> 
+            <div id="rulesModal" class="hide"></div> 
+            <div id="settingsModal" class="hide"></div> 
+            <div id="welcomeModal" class="hide text-center"></div>
+            <div id="winnersModal" class="hide"></div> 
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

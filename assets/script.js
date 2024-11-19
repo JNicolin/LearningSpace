@@ -85,27 +85,25 @@ const startGame = ()=> {
 
 // Main sequence. Runs after each user click
 function boxClicked(e) {
-    if (gameStats.gameOver) return // Stop if the game is already over
-    if (gameStats.roundOver) return // Stop if the round is already over
-
-    // Evaluate the effect of a click. Look for a win, a tie or go on to the next round 
-    if (clickedBoxes[this.id] === 0) {      
-        //1. if the box has not already been clicked, then log value and add a user-icon
+    if (gameStats.gameOver) return // Disregard click if new game not started
+    if (gameStats.roundOver) return  // Disregard click if new round not started
+    if (clickedBoxes[this.id] === 0) { // Mark the box as clicked     
         clickedBoxes[this.id] = gameStats.currentPlayer.value
         placeIcon(this.id, gameStats.currentPlayer.icon.src1, gameStats.currentPlayer.icon.alt1)
 
-    //2. Check if there is a winning sequence after each click
+    //1. Check if there is a winning sequence after each click
     const isWinner = checkForWinner()
-
-    // Update the webpage if there is a win,
-    if (isWinner !== false) {
+    //There is a win
+    if (isWinner !== false) { 
         gameStats.roundsPlayed++
+        //There are more rounds to play
         if (gameStats.roundsPlayed !== gameSettings.roundsPerGame) {
-            state = 2 // roundWin 
+            state = 2
             updateGameStats(state)
             updateBoardVisuals(state)    
-        } else {
-            state = p1.wins === p2.wins ? 5 : 4 //gameTie : gameWin
+        //All rounds are played, end the game
+        } else { 
+            state = p1.wins === p2.wins ? 5 : 4
             updateGameStats(state)
             updateBoardVisuals(state)
         }
@@ -114,13 +112,15 @@ function boxClicked(e) {
         return
     }
 
-    // 3. Check for tie 
+    // 2. There is a tie
     if (!clickedBoxes.includes(0)) {
         gameStats.roundsPlayed++
+        // The round ended with a tie
         if (gameStats.roundsPlayed !== gameSettings.roundsPerGame) { 
-            state = 3 // roundTie
+            state = 3
             updateGameStats(state)
             updateBoardVisuals(state)    
+        // The game ended with a tie
         } else {
             state = 5 // gameTie 
             updateGameStats(state)
@@ -129,7 +129,7 @@ function boxClicked(e) {
         return
     }
 
-    // 4. Continue the current round if the round is not over, wait for next click
+    // 3. No win or tie, continue the current round
     gameStats.currentPlayer = gameStats.currentPlayer == p1 ? p2 : p1
     }
 }
@@ -149,6 +149,7 @@ function checkForWinner() {
     return false
 }
 
+// Add a fruit-icon to a box on the board
 function placeIcon(id, src, alt) {
     var elem = document.createElement("img");
     elem.setAttribute("src", src);
@@ -158,6 +159,7 @@ function placeIcon(id, src, alt) {
     document.getElementById(id).appendChild(elem);
  }
 
+ // Replace all icons on the board with Happy/Sad fruits
 function flipIcons(player){
     for (i = 0; i<clickedBoxes.length; i++) {
         let boxId = i
@@ -173,6 +175,7 @@ function flipIcons(player){
     }
 }
 
+// Update the visual texts and boxes on the Webpage. Adapted to the state of the game
 function updateBoardVisuals(state) {
     switch (state) { 
         case 0: // new game, reset all
@@ -202,7 +205,7 @@ function updateBoardVisuals(state) {
             flipIcons(p2)
             break;
         case 3:  // round finished with a tie
-            headerDiv.innerHTML = `<h1>It's a Tie!</h1>`
+            headerDiv.innerHTML = `<h1>This round is a Tie!</h1>`
             p1ScoreDiv.innerHTML = `P1 wins<br> ${p1.wins}`
             p2ScoreDiv.innerHTML = `P2 wins<br> ${p2.wins}`
             roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
@@ -232,6 +235,7 @@ function updateBoardVisuals(state) {
     }
 }
 
+// Update statistics, state, loggs of the progress of the game
 function updateGameStats(state) {
     switch(state) {
         case 0: // New game, reset all
@@ -285,10 +289,22 @@ function updateGameStats(state) {
     }
 } 
 
+// take a user input to set how many rounds to play per game
 function updateSelectedRounds(selectedValue) {
+    gameSettings.roundsPerGame = selectedValue
+}
+
+// take user input to set player 1 icon
+function updateP1Icon(selectedValue) {
     gameSettings.p1Icon = selectedValue
 }
 
+// take user input to set player 2 icon
+function updateP2Icon(selectedValue) {
+    gameSettings.p2Icon = selectedValue
+}
+
+// start a new round or game
 function restartGame() {
     state = gameStats.gameOver === true ? 0 : 1 // newGame : nextRound 
     updateGameStats(state)
@@ -297,31 +313,77 @@ function restartGame() {
 }
     
 //Problem - class does not toggle back. 
+function welcomeModal() {
+    let wModal = document.getElementById("welcomeModal")
+    wModal.classList.toggle("hide")
+    wModal.innerHTML = `<h2>Welcome players!</h2>
+        <p>Enjoy a nice moment with a friend and just play away!<br>
+        From the settings menu you can adjust the lenght of a game and 
+        choose a favourite fruity icon.</p>
+        <p> Good luck!</p>`
+    modal.show()
+}
+
 function rulesModal() {
-    document.getElementById("rulesModal").classList.toggle("hide")
+    rModal = document.getElementById("rulesModal")
+    rModal.classList.toggle("hide")
+    rModal.innerHTML = 
+    `<h6>How to Play</h6>   
+    <p>Players take turns placing their mark in an empty space.</p>
+    <h6>How to Win</h6> 
+        <ol>
+            <li>Navigate to get three of your marks in a row (horizontally, vertically, or diagonally).</li>
+            <li>The first player to do this wins.</li>
+            <li>If all spaces are filled and no one wins, it’s a tie.</li>
+        </ol>
+    <h6>Tips for Winning</h6>
+        <ul>
+            <li> First: Start in the center for more chances to win.</li> 
+            <li> Block Opponent: If your opponent is about to win, block their row.</li> 
+            <li> Look for Diagonals: Diagonals can be an easy way to win.</li> 
+            <li> Corners Help: Corners open up more possibilities for victory.</li> 
+        </ul>`
     modal.show()
 }
 
 function settingsModal() {
-    document.getElementById("settingsModal").classList.toggle("hide")
+    let sModal = document.getElementById("settingsModal")
+    sModal.classList.toggle("hide")
+    sModal.innerHTML = 
+    `<select id ="p1Icon" class="form-select form-select-sm" aria-label="Select player 1 icon">
+        <option selected>Player 1 icon</option>
+        <option value="0">Orange</option>
+        <option value="1">Strawberry</option>
+        <option value="2">Apple</option>
+        <option value="3">Pear</option>
+        <option value="4">Citrus</option>
+    </select>
+    <select id="p2Icon" class="form-select form-select-sm" aria-label="Select player 2 icon">
+        <option selected>Player 2 icon</option>
+        <option value="0">Orange</option>
+        <option value="1">Strawberry</option>
+        <option value="2">Apple</option>
+        <option value="3">Pear</option>
+        <option value="4">Citrus</option>
+    </select>
+    <label for="rounds" class="form-label mt-2">Number of rounds per game</label>
+    <input id="rounds" class="form-control form-control-sm" type="number" placeholder=".form-control-sm" aria-label=".form-control-sm example" onchange="updateSelectedRounds(this.value)">`
     modal.show()
  }
 
-function welcomeModal() {
-    document.getElementById("welcomeModal").classList.toggle("hide")
-    modal.show()
-}
-
 function winnersModal() {
-    document.getElementById("winnersModal").classList.toggle("hide")
+    winModal = document.getElementById("winnersModal")
+    winModal.classList.toggle("hide")
+    winModal.InnerHTML = 
+    `<p>The winner is ${gameStats.currentPlayer.label}</p>
+    <p>Want to play again?</p>`
     modal.show()
 }
 
+// Initial actions: Welcome players. Set the board and gamestats. Start the game
+updateBoardVisuals(0)
+updateGameStats(0)
 window.onload = function() {
     welcomeModal()
 }
-
-// Start the game initially
-updateBoardVisuals(0)
-updateGameStats(0)
 startGame()
