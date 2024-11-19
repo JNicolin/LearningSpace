@@ -1,6 +1,6 @@
-# Welcome to Tic-Tac-Toe “Fruity
+# Welcome to Tic-Tac-Toe in “Fruity-style"
 
-This is an easy to use two-player game that will let the user have some enjoyable time while waiting for the bus or hanging out with a friend. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. 
+This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. 
 
 -	Illustration - mockup
 
