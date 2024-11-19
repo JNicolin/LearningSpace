@@ -7,7 +7,6 @@ let restartBtn = document.getElementById("restartBtn")
 let navBtnRules = document.getElementById("rulesBtn")
 let navBtnSettings = document.getElementById("settingsBtn")
 let boxes = document.getElementsByClassName("box")
-let p1IconSelector = document.getElementById("p1Icon") 
 let p2IconSelector = document.getElementById("p2Icon")
 let roundsSelector = document.getElementById("rounds")
 let modal = new bootstrap.Modal(document.getElementById("myModal"))
@@ -312,10 +311,10 @@ function restartGame() {
     return
 }
     
-//Problem - class does not toggle back. 
 function welcomeModal() {
+    resetModalContent()
     let wModal = document.getElementById("welcomeModal")
-    wModal.classList.toggle("hide")
+    wModal.classList.remove("hide")
     wModal.innerHTML = `<h2>Welcome players!</h2>
         <p>Enjoy a nice moment with a friend and just play away!<br>
         From the settings menu you can adjust the lenght of a game and 
@@ -324,9 +323,17 @@ function welcomeModal() {
     modal.show()
 }
 
+function resetModalContent() {
+    document.getElementById("rulesModal").classList.add("hide")
+    document.getElementById("settingsModal").classList.add("hide")
+    document.getElementById("winnersModal").classList.add("hide")
+    document.getElementById("welcomeModal").classList.add("hide")
+}
+
 function rulesModal() {
+    resetModalContent()
     rModal = document.getElementById("rulesModal")
-    rModal.classList.toggle("hide")
+    rModal.classList.remove("hide")
     rModal.innerHTML = 
     `<h6>How to Play</h6>   
     <p>Players take turns placing their mark in an empty space.</p>
@@ -346,9 +353,14 @@ function rulesModal() {
     modal.show()
 }
 
+function p1IconChange(event) {
+    console.log(event.target.value)
+}
+
 function settingsModal() {
+    resetModalContent()
     let sModal = document.getElementById("settingsModal")
-    sModal.classList.toggle("hide")
+    sModal.classList.remove("hide")
     sModal.innerHTML = 
     `<select id ="p1Icon" class="form-select form-select-sm" aria-label="Select player 1 icon">
         <option selected>Player 1 icon</option>
@@ -369,11 +381,14 @@ function settingsModal() {
     <label for="rounds" class="form-label mt-2">Number of rounds per game</label>
     <input id="rounds" class="form-control form-control-sm" type="number" placeholder=".form-control-sm" aria-label=".form-control-sm example" onchange="updateSelectedRounds(this.value)">`
     modal.show()
+    p1IconSelector = document.getElementById("p1Icon") 
+    p1IconSelector.addEventListener("change",p1IconChange)
  }
 
 function winnersModal() {
+    resetModalContent()
     winModal = document.getElementById("winnersModal")
-    winModal.classList.toggle("hide")
+    winModal.classList.remove("hide")
     winModal.InnerHTML = 
     `<p>The winner is ${gameStats.currentPlayer.label}</p>
     <p>Want to play again?</p>`
