@@ -1,6 +1,7 @@
 # Welcome to Tic-Tac-Toe in “Fruity-style"
 
-This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the game a set of users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. 
+This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the game a set of users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. The game is accessible from this link 
+[Fruity Tic-Tac-Toe](https://jnicolin.github.io/MS2-TicTacToe/)
 
 ![screenshot of the game UI](assets/img/title_image.png)
 
@@ -8,7 +9,6 @@ This is an implementation of the well-known game Tic-Tac-Toe. With this two play
 Playing this game could invite the players to have a nice relaxing moment, to let players enjoy themselves in a break from work, on the bus or while waiting at the dentist.
 
 Playing games is a fun way of training and maintaining logic thinking, as well as thinking strategically – even if on a less complex level.
-
 
 # Implemented user stories
 ## As a player I want to,
@@ -45,7 +45,6 @@ The choice of the main font was done to reflect a relaxed and happy mood, which 
 ## Choice of icons
 The choice of fruits in a cartoon style was done to emphasise playful intention of spending time with this game.
 -   ![example of icons](assets/img/4_PeH.png)
-
 
 # Quality and test
 ## Manual testing
@@ -88,6 +87,19 @@ The game could be developed further to create additional satisfaction. Here are 
 - Bootstrap 
 - Node,js for test?
 - GitHub and GitPod
+
+# Deployment
+The game was deployed to GitPage from GitHub. Follow this sequence to deploy the site after changes to the code:
+
+1. Select the TicTacToe repository in GitHub
+2. Click on "Settings" on the upper right hand side and select Pages
+3. Under "Default Branch" - set the value to "main"
+4. Save the settings. Deployment is now initated.
+5. Press "Code" symbol to return to the main page
+6. Look for "Deployments" on the right hand bar. 
+7. The last deployment shall be indicated as ongoing or done.
+
+The deployed site is available via this [Link](https://jnicolin.github.io/MS2-TicTacToe/)
 
 # References and acknowledgements
 - https://www.freepik.com/ – fruit icons designed by Rohim and Shuvo Das
