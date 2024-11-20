@@ -2,7 +2,7 @@
 
 This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. 
 
-![alt text](image-1.png)
+![alt text](assets/img/title_image.png)
 
 # User value
 -	Have a nice relaxing moment, enjoying myself in a break from work, on the bus or while waiting at the dentist. 
@@ -52,7 +52,7 @@ This is an implementation of the well-known game Tic-Tac-Toe. With this two play
 -	JS-Linter
 -	Performance, Accessibility – Lighthouse
 -	Responsiveness – Am I Responsive
-![alt text](image.png)
+![alt text](assets/img/responsive_test.png)
 
 ## Summary of test outcomes
 ### Major challenges, resolved
