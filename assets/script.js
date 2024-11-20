@@ -65,10 +65,11 @@ const icon2 = new Icon("Strawberry", "assets/img/2_StN.png", "Neutral strawberry
 const icon3 = new Icon("Apple", "assets/img/3_ApN.png", "Neutral apple icon", "assets/img/3_ApH.png", "Happy apple icon", "assets/img/3_ApS.png", "Sad apple icon")
 const icon4 = new Icon("Pear", "assets/img/4_PeN.png", "Neutral pear icon", "assets/img/4_PeH.png", "Happy pear icon", "assets/img/4_PeS.png", "Sad pear icon")
 const icon5 = new Icon("Citrus", "assets/img/5_CiN.png", "Neutral citrus icon", "assets/img/5_CiH.png", "Happy citrus icon", "assets/img/5_CiS.png", "Sad citrus icon")
-const icons =[icon1, icon2, icon3, icon4, icon5]
+const icons = [icon1, icon2, icon3, icon4, icon5]
+const numOfRounds = [1,2,3,4,5]
 let p1 = new Player("P1", 10, 0, icons[gameSettings.p1Icon], false);
 let p2 = new Player("P2", -10, 0, icons[gameSettings.p2Icon], false);
-let state = 0; // 0 newGame, 1 nextRound, 2 roundWin, 3 roundTie, 4 gameWin, 5 gameTie 
+let state = 0; // 0 newGame, 1 nextRound, 2 roundOver_win, 3 roundOver_tie
 let clickedBoxes = Array(9).fill(0);
 gameStats.currentPlayer = p1;
 let winIndicator = getComputedStyle(document.body).getPropertyValue("--winningBoxColor")
@@ -93,49 +94,29 @@ function gameBoardClicked(e) {
     if (clickedBoxes[this.id] === 0) { // Mark the box as clicked     
         clickedBoxes[this.id] = gameStats.currentPlayer.value
         placeIcon(this.id, gameStats.currentPlayer.icon.src1, gameStats.currentPlayer.icon.alt1)
+    }
 
-    //1. Check if there is a winning sequence after each click
+    //1. Check if there is a winning sequence of boxes after each click
     const isWinner = checkForWinner()
-    //There is a win
     if (isWinner != false) { 
-        gameStats.roundsPlayed++
-        //There are more rounds to play
-        if (gameStats.roundsPlayed != gameSettings.roundsPerGame) {
-            state = 2
-            updateGameStats(state)
-            updateBoardVisuals(state)    
-        //All rounds are played, end the game
-        } else {
-            gameStats.currentPlayer.wins++ 
-            state = p1.wins === p2.wins ? 5 : 4
-            updateGameStats(state)
-            updateBoardVisuals(state)
-        }
+        state = 2
+        state = updateGameStats(2)
+        updateBoardVisuals(state)    
         let winningBoxSequence = isWinner   
         winningBoxSequence.map(box => boxes[box].style.backgroundColor = winIndicator)
         return
     }
 
-    // 2. There is a tie
+    // 2. Check if there is a tie / all boxes are clicked but no win
     if (!clickedBoxes.includes(0)) {
-        gameStats.roundsPlayed++
-        // The round ended with a tie
-        if (gameStats.roundsPlayed != gameSettings.roundsPerGame) { 
-            state = 3
-            updateGameStats(state)
-            updateBoardVisuals(state)    
-        // The game ended with a tie
-        } else {
-            state = 5 // gameTie 
-            updateGameStats(state)
-            updateBoardVisuals(state)    
-        }
-        return
+        state = 3
+        state = updateGameStats(state)
+        updateBoardVisuals(state)    
     }
 
     // 3. No win or tie, continue the current round
     gameStats.currentPlayer = gameStats.currentPlayer == p1 ? p2 : p1
-    }
+    return
 }
 
 // ----------- Helper functions and declarations -------------
@@ -198,54 +179,54 @@ function updateBoardVisuals(state) {
             for (box of boxes ) {
                 box.innerText = ''
                 box.style.backgroundColor = ''
+                restartBtn.innerHTML = `New round!`
             }
             roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
             break;   
         case 2: // round finished with a win
-            headerDiv.innerHTML = `<h1>${gameStats.currentPlayer.label} has won the round!</h1>`
             p1ScoreDiv.innerHTML = `P1 wins<br> ${p1.wins}`
             p2ScoreDiv.innerHTML = `P2 wins<br> ${p2.wins}`
             roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
             flipIcons(p1)
             flipIcons(p2)
-            break;
-        case 3:  // round finished with a tie
-            headerDiv.innerHTML = `<h1>This round is a Tie!</h1>`
-            p1ScoreDiv.innerHTML = `P1 wins<br> ${p1.wins}`
-            p2ScoreDiv.innerHTML = `P2 wins<br> ${p2.wins}`
-            roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
-            break;
-        case 4: // game finished with a win
-            gameStats.currentPlayer.wins++
-
-            if (p1.winner && !p2.winner) {
-                headerDiv.innerHTML = `<h1>${p1.label} has won the game!</h1>`
-            } else if (!p1.winner && p2.winner) {
-                headerDiv.innerHTML = `<h1>${p2.label} has won the game!</h1>`
-            } else if (p1.winner && p2.winner) {
-                headerDiv.innerHTML = `It's a Tie!</h1>`
+            if (gameStats.roundOver && !gameStats.gameOver) {
+                if (p1.winner) {
+                headerDiv.innerHTML = `<h1>${p1.label} has won the round!</h1>`
+                } else if (p2.winner) {
+                    headerDiv.innerHTML = `<h1>${p2.label} has won the round!</h1>`
+                }
+                restartBtn.innerText = `New round`
             }
+            if (gameStats.gameOver) {
+                if (p1.winner && !p2.winner) {
+                    headerDiv.innerHTML = `<h1>${p1.label} has won the game!</h1>`
+                } else if (!p1.winner && p2.winner) {
+                    headerDiv.innerHTML = `<h1>${p2.label} has won the game!</h1>`
+                } else if (p1.winner && p2.winner) {
+                    headerDiv.innerHTML = `This game is a Tie!</h1>`
+                }
+                restartBtn.innerText = `New game`
+            }
+                break;
+        case 3:  // round finished with a tie
             p1ScoreDiv.innerHTML = `P1 wins<br> ${p1.wins}`
             p2ScoreDiv.innerHTML = `P2 wins<br> ${p2.wins}`
             roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
-            restartBtn.innerText = `New game`
-            flipIcons(p1)
-            flipIcons(p2)
+            if (gameStats.roundOver && !gameStats.gameOver) {            
+                headerDiv.innerHTML = `<h1>This round is a Tie!</h1>`
+                restartBtn.innerText = `New round`
+            } else if (gameStats.gameOver) {            
+                headerDiv.innerHTML = `<h1>This game is a tie!</h1>`
+                restartBtn.innerText = `New game`
+            }
             break;
-        case 5: // game finished with a tie
-            headerDiv.innerHTML = `<h1>It is a tie!</h1>`
-            p1ScoreDiv.innerHTML = `P1 wins<br> ${p1.wins}`
-            p2ScoreDiv.innerHTML = `P2 wins<br> ${p2.wins}`
-            roundsDiv.innerHTML = `${gameStats.roundsPlayed} out of ${gameSettings.roundsPerGame} played`
-            restartBtn.innerText = `New game`
-            break;   
     }
 }
 
 // Update statistics, state, loggs of the progress of the game
 function updateGameStats(state) {
     switch(state) {
-        case 0: // New game, reset all
+        case 0: // New game requested, reset all
             gameStats.roundsPlayed = 0
             gameStats.roundOver = false
             gameStats.gameOver = false
@@ -258,66 +239,66 @@ function updateGameStats(state) {
                 clickedBoxes[i] = 0
             }
             break;
-        case 1: // new round, reset round
+        case 1: // New round requested, reset round
             for (i=0; i<9; i++) {
                 clickedBoxes[i] = 0
             }
             gameStats.roundOver = false
+            gameStats.gameOver = false
             break;
         case 2: // round finished with a win
-            gameStats.currentPlayer.wins++
             gameStats.roundOver = true
+            gameStats.roundsPlayed++
+            gameStats.currentPlayer.wins++
             p1.winner = gameStats.currentPlayer === p1 ? true : false
             p2.winner = gameStats.currentPlayer === p2 ? true : false 
-            gameStats.currentPlayer === p1 ? p2 : p1
-            break;
+            gameStats.currentPlayer = gameStats.currentPlayer === p1 ? p2 : p1
+            if (gameStats.roundsPlayed != gameSettings.roundsPerGame) {      
+                gameStats.gameOver = false
+                state = 2
+            } else if (gameStats.roundsPlayed === gameSettings.roundsPerGame) {      
+                gameStats.gameOver = true
+                if (`${p1.wins}` > `${p2.wins}`) {
+                    p1.winner = true
+                    p2.winner = false
+                    state = 2
+                } else if (`${p1.wins}` < `${p2.wins}`) {
+                    p1.winner = false
+                    p2.winner = true
+                    state = 2
+                } else if (`${p2.wins}` === `${p1.wins}`) {
+                    p1.winner = true
+                    p2.winner = true
+                    state = 3            
+                }
+            }
+            return state
         case 3: // round finished with a tie
             gameStats.roundOver = true
-            gameStats.currentPlayer === p1 ? p2 : p1
+            gameStats.roundsPlayed++
             p1.winner = false
             p2.winner = false
-            break;
-        case 4: // game finished with a win
-            if (`${p1.wins}` > `${p2.wins}`) {
-                p1.winner = true
-                p2.winner = false
-            } else if (`${p2.wins}` > `${p1.wins}`) {
-                p1.winner = false
-                p2.winner = true
-            } else if (`${p2.wins}` === `${p1.wins}`) {
-                p1.winner = true
-                p2.winner = true
+            gameStats.currentPlayer = gameStats.currentPlayer === p1 ? p2 : p1
+            if (gameStats.roundsPlayed !== gameSettings.roundsPerGame) {            
+                gameStats.gameOver = false
+                state = 3
+            } else if (gameStats.roundsPlayed === gameSettings.roundsPerGame) {            
+                gameStats.gameOver = true
+                state = 3
             }
-            gameStats.gameOver = true
-            gameStats.roundOver = true
-            break;
-        case 5: // game finished with a tie
-            gameStats.gameOver = true
-            gameStats.roundOver = true
-            break;
-    }
-} 
-
-// // take a user input to set how many rounds to play per game
-// function updateSelectedRounds(selectedValue) {
-//     gameSettings.roundsPerGame = selectedValue
-// }
-
-// // take user input to set player 1 icon
-// function updateP1Icon(selectedValue) {
-//     gameSettings.p1Icon = selectedValue
-// }
-
-// // take user input to set player 2 icon
-// function updateP2Icon(selectedValue) {
-//     gameSettings.p2Icon = selectedValue
-// }
+            return state
+    } 
+}
 
 // start a new round or game
 function restartGame() {
-    state = gameStats.gameOver === true ? 0 : 1 // newGame : nextRound 
-    updateGameStats(state)
-    updateBoardVisuals(state)
+    if (gameStats.gameOver) {
+        updateGameStats(0)
+        updateBoardVisuals(0)       
+    } else  if (gameStats.roundOver) {
+        updateGameStats(1)
+        updateBoardVisuals(1)       
+    } 
     return
 }
     
@@ -330,7 +311,7 @@ function welcomeModal() {
 
 function rulesModal() {
     resetModalContent()
-    rModal = document.getElementById("rulesModal")
+    let rModal = document.getElementById("rulesModal")
     rModal.classList.remove("hide")
     modal.show()
 }
@@ -342,19 +323,9 @@ function settingsModal() {
     modal.show()
  }
 
-function winnersModal() {
-    resetModalContent()
-    winModal = document.getElementById("winnersModal")
-    winModal.classList.remove("hide")
-    `<p>The winner is ${gameStats.currentPlayer.label}</p>
-    <p>Want to play again?</p>`
-    modal.show()
-}
-
 function resetModalContent() {
     document.getElementById("rulesModal").classList.add("hide")
     document.getElementById("settingsModal").classList.add("hide")
-    document.getElementById("winnersModal").classList.add("hide")
     document.getElementById("welcomeModal").classList.add("hide")
 }
 
@@ -367,8 +338,9 @@ function p2IconSelectorChange(event) {
 }
 
 function roundsSelectorChange(event) {
-    gameSettings.roundsPerGame = 2 // event.target.value
+    gameSettings.roundsPerGame = numOfRounds[event.target.value]
     gameStats.gameOver = true
+    restartGame()
 }
 
 // Initial actions: Welcome players. Set the board and gamestats. Start the game
