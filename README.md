@@ -5,9 +5,9 @@ This is an implementation of the well-known game Tic-Tac-Toe. With this two play
 ![screenshot of the game UI](assets/img/title_image.png)
 
 # User value
-Playing this game could invite the players to have a nice relaxing moment, enjoying myself in a break from work, on the bus or while waiting at the dentist.
+Playing this game could invite the players to have a nice relaxing moment, to let players enjoy themselves in a break from work, on the bus or while waiting at the dentist.
 
-Playing games is a fun way of training and mainitaining logic thinking, as well as thinking strategically – even if on a less complex level.
+Playing games is a fun way of training and maintaining logic thinking, as well as thinking strategically – even if on a less complex level.
 
 
 # Implemented user stories
