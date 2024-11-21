@@ -3,7 +3,7 @@
 This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the game a set of users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. The game is accessible from this link 
 [Fruity Tic-Tac-Toe](https://jnicolin.github.io/MS2-TicTacToe/)
 
-<img src="assets/img/readme/title_image.png" alt="board" height="280"/>
+<img src="assets/img/readme/title_image.png" alt="board"/>
 
 # User value
 Playing this game could invite the players to have a nice relaxing moment, to let players enjoy themselves in a break from work, on the bus or while waiting at the dentist.
@@ -84,7 +84,7 @@ The choice of the main font was done to reflect a relaxed and happy mood, which 
 The choice of fruits in a cartoon style was done to emphasise playful intention of spending time with this game.
 |Orange|Strawberry |Apple |Pear |Citrus |
 |------|------|------|-|-|
-|<img src="assets/img/1_OrH.png" alt="Pear"/>|<img src="assets/img/2_StH.png" alt="Pear"/>|<img src="assets/img/3_ApH.png" alt="Pear"/>|<img src="assets/img/4_PeH.png" alt="Pear"/>|<img src="assets/img/5_CiH.png" alt="Pear"/>|
+|<img src="assets/img/1_OrH.png" alt="Orange" height="50"/>|<img src="assets/img/2_StH.png" alt="Strawberry" height="50"/>|<img src="assets/img/3_ApH.png" alt="Apple" height="50"/>|<img src="assets/img/4_PeH.png" alt="Pear" height="50"/>|<img src="assets/img/5_CiH.png" alt="Citrus" height="50"/>|
 
 # Quality and test
 ## Manual testing
