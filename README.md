@@ -3,7 +3,7 @@
 This is an implementation of the well-known game Tic-Tac-Toe. With this two player-version of the game a set of users can have some enjoyable time while waiting for the bus or just want a friendly challenge. Use your strategic mind to win the game by placing your icons in a row on the board while blocking your opponent from doing the same. The game is accessible from this link 
 [Fruity Tic-Tac-Toe](https://jnicolin.github.io/MS2-TicTacToe/)
 
-<img src="assets/img/readme/title_image.png" alt="board"/>
+<img src="assets/img/readme/title_image.png" alt="board" height="280"/>
 
 # User value
 Playing this game could invite the players to have a nice relaxing moment, to let players enjoy themselves in a break from work, on the bus or while waiting at the dentist.
@@ -37,20 +37,20 @@ The game could be developed further to create additional satisfaction. Here are 
 ## Icons on the board are added after each user click
 | After one click                               |Two clicks                     | Five clicks                               |
 | ----------------------------------------------|-------------------------------|-------------------------------------------|
-| <img src="assets/img/readme/game_One.jpeg" alt= "board"/> | <img src="assets/img/readme/game_Two.jpeg" alt="board"/> | <img src="assets/img/readme/game_Five.jpeg" alt="board"/>
+| <img src="assets/img/readme/game_One.jpeg" alt= "board" height="175"/> | <img src="assets/img/readme/game_Two.jpeg" alt="board" height="175"/> | <img src="assets/img/readme/game_Five.jpeg" alt="board" height="175"/>
 
 
 ## Icons on the board are replaced after end of round
-| Before end                                    |After end of round             | 
+| Before end                                   |After end of round          |
 | ----------------------------------------------|-------------------------------|
-| <img src="assets/img/readme/icons_On.jpeg" alt= "board"/>  |<img src="assets/img/readme/icons_Over.jpeg" alt= "board"/>  |
+| <img src="assets/img/readme/icons_On.jpeg" alt= "board" height="175"/>  | <img src="assets/img/readme/icons_Over.jpeg" alt="board" height="175"/>|
 
 Icons are shifted at end of game to indicate winner/looser mood
 
 ## One single modal with dynamic content
 | Welcome                                       |Rules                          | Settings                                  |
 | ----------------------------------------------|-------------------------------|-------------------------------------------|
-| <img src="assets/img/readme/welcomeModal.png" alt= "Modal image"/>  | <img src="assets/img/readme/rulesModal.png" alt= "Modal image"/>  | <img src="assets/img/readme/settingsModal.png" alt= "Modal image"/> |
+| <img src="assets/img/readme/welcomeModal.png" alt= "Modal image" height="175"/>  | <img src="assets/img/readme/rulesModal.png" alt= "Modal image" height="175"/>  | <img src="assets/img/readme/settingsModal.png" alt= "Modal image" height="175"/> |
 
 The single modal adjusts its content dependning on the event that triggered it to open. The welcome modal opens on the page loaded-event, the other two open when a user clicks on buttons
 
@@ -64,7 +64,7 @@ The single modal adjusts its content dependning on the event that triggered it t
 ## Reset button with dynamic content
 | Next round                       | Next game           | 
 | ----------------------------------------------|-------------------------------|
-| <img src="assets/img/readme/rst_round.jpeg" alt= "board"/>  |<img src="assets/img/readme/rst_game.jpeg" alt= "board"/>  |
+| <img src="assets/img/readme/rst_round.jpeg" alt= "board" height="50"/>  |<img src="assets/img/readme/rst_game.jpeg" alt= "board" height="50"/>  |
 - The reset button text updates according to progress of the game - next round / next game
 
 # Design 
