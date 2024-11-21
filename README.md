@@ -28,7 +28,7 @@ The game could be developed further to create additional satisfaction. Here are 
 ## Buttons to open show rules and settings information
 | Buttons                                |
 | ---------------------------------------|
-| <img src="assets/img/welcomeModal.png" alt="drawing" width="250"/>|
+| <img src="assets/img/readme/btn_Navb.jpeg" alt="navbar buttons" width="250"/>|
 
 - A button to open a Select-dialogue for a fruit-icon 
 - A button to open a Select-dialogue for selecting number of rounds in a game 
@@ -82,7 +82,9 @@ The choice of the main font was done to reflect a relaxed and happy mood, which 
 
 ## Choice of icons
 The choice of fruits in a cartoon style was done to emphasise playful intention of spending time with this game.
-<img src="assets/img/4_PeH.png" alt="example of Icon" width="100"/>
+|Orange|Strawberry |Apple |Pear |Citrus |
+|------|------|------|-|-|
+|<img src="assets/img/1_OrH.png" alt="Pear"/>|<img src="assets/img/2_StH.png" alt="Pear"/>|<img src="assets/img/3_ApH.png" alt="Pear"/>|<img src="assets/img/4_PeH.png" alt="Pear"/>|<img src="assets/img/5_CiH.png" alt="Pear"/>|
 
 # Quality and test
 ## Manual testing
